@@ -12,7 +12,7 @@ userRouter.post("/",(req,res)=>{
     const {email,firstname} = req.body;
     console.log(firstname);
     req.body.status = "non-active";
-var url = buildUrl(`https://Guvi-Url-Shortening-Hackathon.herokuapp.com/user`, {
+var url = buildUrl(`https://guvi-url-shortening-hackathon.herokuapp.com/user`, {
   path: "verify",
 //   lowerCase: true,
   queryParams: {
