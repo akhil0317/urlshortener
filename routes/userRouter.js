@@ -1,6 +1,6 @@
 const express = require("express");
 require("../dbConfig/config");
-const {email_pass} = require("../configuration.js");
+// const {email_pass} = require("../configuration.js");
 const uuid = require("uuid");
 const buildUrl = require("build-url");
 
@@ -40,7 +40,7 @@ var url = buildUrl(`https://guvi-url-shortening-hackathon.herokuapp.com/user`, {
         service: 'gmail',
         auth: {
           user: "akhil33.knl@gmail.com",
-          pass: email_pass
+          pass: process.env.email_pass
         }
       });
       

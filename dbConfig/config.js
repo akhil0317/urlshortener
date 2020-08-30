@@ -1,11 +1,11 @@
 var mongoose = require("mongoose");
 
 
-const {DB_URL} = require("../configuration.js");
+// const {DB_URL} = require("../configuration.js");
 
 
 // console.log(DB_URL);
- mongoose.connect(DB_URL, {
+ mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
