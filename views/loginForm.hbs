@@ -1,5 +1,5 @@
 <div class="container">
-  <form id="admin-login-form" action="{{submitTarget}}" method="{{submitMethod}}">
+  <form id="user-login-form" action="{{submitTarget}}" method="{{submitMethod}}">
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -15,3 +15,58 @@
   </form>
 </div>
 <script>
+ var form = document.getElementById("user-login-form");
+ form.addEventListener("submit", event => {
+
+    event.preventDefault();
+
+
+     const submitUrl = form.action;
+
+      const submitMethod = form.method;
+
+    const formData = new FormData(form);
+      var userDetails = {};
+      for (const fields of formData.entries()) {
+        const [key, value] = fields;
+        userDetails[key] = value;
+      }
+console.log(submitMethod);
+console.log(submitUrl);
+console.log(userDetails);
+    fetch(submitUrl, {
+        method: submitMethod.toUpperCase(),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userDetails)
+      })
+        .then(response => {
+          console.log(response.status);
+          if (response.status === 200) {
+            return response.json()
+          }
+          else {
+            throw (new error(response.status))
+          }
+        })
+        .then(data => {
+          alert(data.message);
+          //window.location.href = "/teacher-students/" + teacherID
+        })
+        .catch(error => {
+          if (error.meaasage == "400")
+            alert("please check the form details..")
+          else if (error.message == "500")
+            alert("please try after some time!!")
+          else
+            alert(error.meaasage)
+        });
+
+  })
+
+
+
+
+</script>
+

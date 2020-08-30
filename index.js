@@ -27,7 +27,7 @@ app.get("/",(req,res)=>{
           layout: "login",
           title: "LoginPage",
           submitTarget:"/user/verifyLogin",
-          method:POST
+          method:"POST"
 
         });
       } catch (e) {
@@ -67,7 +67,7 @@ app.get("/forgotPassword",(req,res)=>{
 
 app.use("/user",userRouter)
 
-const PORT = process.env.PORT||8080
+const PORT = process.env.PORT||8089
 app.listen(PORT, () => {
     console.log("server running");
 })
