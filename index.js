@@ -6,6 +6,7 @@ const {userRouter} = require("./routes/userRouter");
 const ifEquality = require("./views/helpers/ifEquality");
 const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 const hbs = expressHbs.create({
     extname: ".hbs",
     layoutsDir: path.join(__dirname, "./views/layouts"),
@@ -25,6 +26,9 @@ app.get("/",(req,res)=>{
         res.status(200).render("loginForm", {
           layout: "login",
           title: "LoginPage",
+          submitTarget:"/user/verifyLogin",
+          method:POST
+
         });
       } catch (e) {
         console.log(e);

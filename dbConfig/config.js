@@ -8,7 +8,8 @@ const {DB_URL} = require("../configuration.js");
  mongoose.connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
   });
 
   const db = mongoose.connection;

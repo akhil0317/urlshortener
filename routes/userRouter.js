@@ -10,10 +10,15 @@ const userRouter = express.Router();
 
 userRouter.post("/",(req,res)=>{
     const {email,firstname} = req.body;
+    console.log(firstname);
     req.body.status = "non-active";
-var url = buildUrl('http://randugdugllskjug.com', {
-  path: uuid.v4()+uuid.v4()+uuid.v4(),
-  lowerCase: true,
+var url = buildUrl('http://localhost:8080/user', {
+  path: "verify",
+//   lowerCase: true,
+  queryParams: {
+      name:firstname,
+    id: uuid.v4()
+  }
 });
 
     console.log(req.body);
@@ -47,48 +52,7 @@ var url = buildUrl('http://randugdugllskjug.com', {
        <html>
        <body>
        <p id = "url">${url}</p>
-       <input type = "text" id = "action" style = "visibility: hidden;">/user/verify</input>
-       <input type = "text" id = "method" style = "visibility: hidden;">POST</input>
        </body>
-       <script>
-       document.getElementById("url").addEventListener("click", myFunction);
-
-        function myFunction(){
-            var action = document.getElementById("action")
-            var method = document.getElementById("method").innerHTML;
-           console.log("hi");
-           console.log(action);
-           console.log(method);
-        fetch(action, {
-            method: method.toUpperCase(),
-            headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(${{firstname:firstname}})
-          })
-            .then(response => {
-              console.log(response.status);
-              if (response.status === 200) {
-                return response.json()
-              }
-              else {
-                throw (new error(response.status))
-              }
-            })
-            .then(data => {
-              alert(data.message);
-              //window.location.href = "/teacher-students/" + teacherID
-            })
-            .catch(error => {
-              if (error.meaasage == "400")
-                alert("please check the form details..")
-              else if (error.message == "500")
-                alert("please try after some time!!")
-              else
-                alert(error.meaasage)
-            });
-       }
-       </script>
        </html>
        `
       };
@@ -119,11 +83,38 @@ var url = buildUrl('http://randugdugllskjug.com', {
 })
 
 
-userRouter.post("/verify",(req,res)=>{
-    console.log("firstname"+req.body.firstname);
-    res.status(200).json({message:"successfully verified"});
+userRouter.get("/verify",async (req,res)=>{
+    console.log(req.query.name);
+    console.log("firstname"+req.query.name);
+    console.log(req.query.id)
+    const result = await User.findOneAndUpdate(
+        {
+          first_name: req.query.name
+        },
+        {
+          status: "active"
+        }
+      );
+
+      console.log(result);
+      
+    res.status(200).send("you are successfully verified please login !!!");
 })
 
+
+userRouter.get("/verifyLogin", (req,res)=>{
+    const{email,password} =req.body;
+    console.log(email,password);
+    const findByProp = async () => {
+        const result = await User.findOne({
+          email: email 
+        });
+        console.log(result);
+      };
+
+      
+
+})
 module.exports = {
     userRouter
 }
